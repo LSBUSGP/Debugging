@@ -115,3 +115,31 @@ Open the scene `RuntimeWarning` in the folder `RuntimeErrorsAndWarnings`. This s
 
 Again, click on the warning message highlights the object that generated the warning. In this case there is no code to open as the problem is in the `Size` parameters on the `Box Collider` in the Unity Editor.
 
+### Custom messages
+
+As well as built in errors and warnings, you can add your own with `Debug.LogWarning` and `Debug.LogError`. Open the scene `CustomErrorsAndWarnings` and run it. It has two empty game objects `CustomError` and `CustomWarning`. Each has a script, `CustomError.cs` and `CustomWarning.cs` respectively.
+
+```cs
+using UnityEngine;
+
+public class CustomError : MonoBehaviour
+{
+    void Start()
+    {
+        Debug.LogError("This is a custom error message.", gameObject);
+    }
+}
+```
+
+```cs
+using UnityEngine;
+
+public class CustomWarning : MonoBehaviour
+{
+    void Start()
+    {
+        Debug.LogWarning("This is a custom warning message.", gameObject);
+    }
+}
+```
+
