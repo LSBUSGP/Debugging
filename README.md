@@ -172,3 +172,79 @@ Running this project, you will see that the `Visible Value` variable in the scri
 Now you will see normally hidden additional information about your script:
 
 ![image](https://github.com/LSBUSGP/Debugging/assets/3679392/5308ae60-688f-4165-b480-cf909e26cb03)
+
+This feature can also be useful in debugging plugins and built in components as well as you own scripts. Note, if you customized the editor view for your object, this option will ignore that and just show the raw data.
+
+## Custom profiling
+
+Sometimes the bugs you have don't produce any errors, but they still don't work how you want. And sometimes it can be difficult to identify exactly where the code is going wrong. Unity contains a profiler window which allows you to trace out the amount of time spent dealing with each function in your project. But you can customize it to trace out any data so long as it's positive number. First, let's open the `Profiler` window and see how it works. You can open the profiler window by clicking on the `Window` menu, then `Analysis`, then `Profiler`. Here is a typical trace:
+
+![image](https://github.com/LSBUSGP/Debugging/assets/3679392/3e094495-ce7d-49f4-8b59-d5543661fda2)
+
+To customise this window, we first need to install the package `Unity Profiling Core` from the `Unity Registry`:
+
+![image](https://github.com/LSBUSGP/Debugging/assets/3679392/1135e930-24b4-4ef5-9a00-d5eae23e9b05)
+
+Click on the `Packages` pull down box, and choose `Unity Registry`. Then find `Unity Profiling Core` and click the `Install` button.
+
+Now open the `CustomProfiler` scene from the `CustomProfiler` folder. This scene has one sphere object with the `ProfileMovement` script on it:
+
+```cs
+using UnityEngine;
+
+public class ProfileMovement : MonoBehaviour
+{
+    public float speed = 5f;
+    public float smoothTime = 1f;
+    float velocity = 0f;
+
+    void Start()
+    {
+        Application.targetFrameRate = 30;
+    }
+
+    void Update()
+    {
+        Vector3 position = transform.position;
+        float input = Input.GetAxis("Horizontal");
+        float target = position.x + input * speed;
+        position.x = Mathf.SmoothDamp(position.x, target, ref velocity, 1f);
+        transform.position = position;
+    }
+}
+```
+
+If you run this scene, you will see that you can move the sphere smoothly with the left and right arrow keys or the `A` and `D` keys. The bug here is subtle and occurs when you let go of the input key.
+
+To get a better idea of what is going on here, we can add a custom profile trace to the profiler window. First add this line to the top of the class:
+
+```cs
+    public static readonly ProfilerCounter<float> SpeedCounter = new ProfilerCounter<float>(ProfilerCategory.Scripts, "Speed", ProfilerMarkerDataUnit.Count);
+```
+
+Then add this line to the bottom of the `Update` function:
+
+```cs
+        SpeedCounter.Sample(Mathf.Abs(velocity));
+```
+
+Now go to the `Profiler` window and select the `Profiler Modules` menu. Untick all of the unwanted categories. Then at the bottom you should see a cog. Click that to add a new section:
+
+![image](https://github.com/LSBUSGP/Debugging/assets/3679392/787df04f-38b9-4a44-a950-f6264a7a6508)
+
+Click the `Add` button, then enter the name of your module (I've used `Movement`) then select the `User` and `Scripts` sections. Any new counters you define should appear here. Double click your counter to add it to the counters to be displayed in the module. Finally click on the `Save Changes` button to apply your changes.
+
+![image](https://github.com/LSBUSGP/Debugging/assets/3679392/1a4cec64-25f2-489f-afd8-d5c221dec73b)
+
+Now run the project and watch the output trace:
+
+![image](https://github.com/LSBUSGP/Debugging/assets/3679392/b59398fa-5497-4d73-b31d-35b6bc1e000f)
+
+Here the trace on the left is when I move from left to right and stop, then second is when I move from right to left and stop.
+
+Now we know exactly what the output looks like we can try digging into the cause.
+
+## Visual Studio debugger
+
+
+
