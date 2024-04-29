@@ -51,4 +51,7 @@ public class DeliberateMistakes : MonoBehaviour
 
 Note: you only see these messages if you have the error filter switched on. The messages don't identify the correct cause of the error. It generates several additional spurious errors that have nothing to do with the mistake. If you have any errors (as opposed to warnings) you will not be able to run or build the project in the Unity editor.
 
+You can usually use the error code to look up what the error means by searching the error code. In this case, the error code is `CS10003`:
+
+https://learn.microsoft.com/en-us/dotnet/csharp/misc/cs1003
 
