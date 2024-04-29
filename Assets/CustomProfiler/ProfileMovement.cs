@@ -17,7 +17,7 @@ public class ProfileMovement : MonoBehaviour
         Vector3 position = transform.position;
         float input = Input.GetAxis("Horizontal");
         float target = position.x + input * speed;
-        position.x = Mathf.SmoothDamp(position.x, target, ref velocity, 1f);
+        position.x = Mathf.SmoothDamp(position.x, target, ref velocity, smoothTime);
         transform.position = position;
     }
 }

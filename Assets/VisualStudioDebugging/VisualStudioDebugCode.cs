@@ -47,7 +47,7 @@ public class VisualStudioDebugCode : MonoBehaviour
         Vector3 position = transform.position;
         float input = Input.GetAxis("Horizontal");
         float target = position.x + input * speed;
-        position.x = SmoothDampUnity(position.x, target, ref velocity, 1f, Mathf.Infinity, Time.deltaTime);
+        position.x = SmoothDampUnity(position.x, target, ref velocity, smoothTime, Mathf.Infinity, Time.deltaTime);
         transform.position = position;
     }
 }
