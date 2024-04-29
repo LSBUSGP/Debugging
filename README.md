@@ -111,5 +111,7 @@ Can you fix this error?
 
 Open the scene `RuntimeWarning` in the folder `RuntimeErrorsAndWarnings`. This scene contains a single cube with a `BoxCollider`. If you run this scene, you will see a runtime warning in the `Console` window:
 
-![image](https://github.com/LSBUSGP/Debugging/assets/3679392/a6ed9ccd-c9b6-46dd-8747-6f049599d712)
+![image](https://github.com/LSBUSGP/Debugging/assets/3679392/b3b15036-463b-4efe-9d2d-89addbf04304)
+
+Again, click on the warning message highlights the object that generated the warning. In this case there is no code to open as the problem is in the `Size` parameters on the `Box Collider` in the Unity Editor.
 
