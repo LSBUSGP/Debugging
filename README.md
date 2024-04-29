@@ -24,7 +24,7 @@ Select `External Tools` from the list on the left, and `Visual Studio` or `Visua
 
 The most efficient way to debug your software is to catch them before they get into your game. Unity will automatically catch and report errors and warnings in your code before you even run the program. As soon as your program code is compiled within Unity, the `Console` window will show any errors or warnings in the code along with an error code and the line number containing the error. Double clicking on the error line in the `Console` window should open the editor and highlight the line where the error is.
 
-To demonstrate this feature, create a new Script called `DeliberateMistakes.cs` then change the first word of the script from `using` to `usong`. This is an example of a simple typo. What does Unity show when it detects this error?
+To demonstrate this feature, open the script called `DeliberateMistakes.cs` in the folder `ScriptErrorsAndWarnings` then change the first word of the script from `using` to `usong`. This is an example of a simple typo. What does Unity show when it detects this error?
 
 ```cs
 usong System.Collections;
@@ -80,5 +80,24 @@ Unlike errors, you may still run your projects even with warnings in the scripts
 
 ## Runtime errors and warnings
 
+Open the scene `RuntimeError` in the folder `RuntimeErrorsAndWarnings`. This has a `Sphere` object and an empty `Target` object. The `Sphere` object has the script `RuntimeError` attached:
+```cs
+using UnityEngine;
 
+public class RuntimeError : MonoBehaviour
+{
+    public Transform target;
+
+    void Update()
+    {
+        transform.position = target.position;
+    }
+}
+```
+
+Although there are no errors in this script, if you press the run button, you'll see a stream of errors appear in the `Console` window.
+
+![image](https://github.com/LSBUSGP/Debugging/assets/3679392/f9e371ef-4d41-43f4-87ff-911d60a00623)
+
+This is one of the most common errors that you will see, and what it indicates is that a variable (in this case `target`) is supposed to be pointing to a component, but it hasn't been set to a component in the Unity editor.
 
