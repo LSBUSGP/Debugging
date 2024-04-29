@@ -143,3 +143,9 @@ public class CustomWarning : MonoBehaviour
 }
 ```
 
+As with other warning and error messages the object highlights in the editor when the message is clicked and the script opens when it is double clicked. Note that the `gameObject` passed as the second parameter to these messages is what indicates the object so you can (if you want to) have other objects highlight in response to the message. Note also that custom error messages do not stop execution like the built in errors.
+
+## Unity debug mode
+
+
+
