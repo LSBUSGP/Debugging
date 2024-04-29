@@ -22,3 +22,33 @@ Select `External Tools` from the list on the left, and `Visual Studio` or `Visua
 
 ## Script Errors and Warnings
 
+The most efficient way to debug your software is to catch them before they get into your game. Unity will automatically catch and report errors and warnings in your code before you even run the program. As soon as your program code is compiled within Unity, the `Console` window will show any errors or warnings in the code along with an error code and the line number containing the error. Double clicking on the error line in the `Console` window should open the editor and highlight the line where the error is.
+
+To demonstrate this feature, create a new Script called `DeliberateMistakes.cs` then change the first word of the script from `using` to `usong`. This is an example of a simple typo. What does Unity show when it detects this error?
+
+```cs
+usong System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class DeliberateMistakes : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}
+```
+
+![image](https://github.com/LSBUSGP/Debugging/assets/3679392/0026e7e1-b618-4430-b463-8aed9e50ab07)
+
+Note: you only see these messages if you have the error filter switched on. The messages don't identify the correct cause of the error. It generates several additional spurious errors that have nothing to do with the mistake. If you have any errors (as opposed to warnings) you will not be able to run or build the project in the Unity editor.
+
+
