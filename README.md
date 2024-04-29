@@ -55,3 +55,24 @@ You can usually use the error code to look up what the error means by searching 
 
 https://learn.microsoft.com/en-us/dotnet/csharp/misc/cs1003
 
+### Experiment
+
+How many different error codes can you create? What code error do you need to create that error?
+
+### Warnings
+
+As well as errors, Unity will also warn you about code which is legal but probably not what you want. For example, if you add this code to your `Start` function:
+
+```cs
+        if (false)
+        {
+            Debug.Log("This is a deliberate mistake");
+        }
+```
+
+This generates warning code CS0162:
+
+![image](https://github.com/LSBUSGP/Debugging/assets/3679392/e7955e39-ee58-4226-990a-9248cefa4aef)
+
+https://learn.microsoft.com/en-us/dotnet/csharp/misc/cs0162
+
