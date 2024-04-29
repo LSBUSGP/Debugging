@@ -322,5 +322,13 @@ At this point, Unity will stop responding and the current instruction should be 
 
 You can view the contents of any variable at this point by hovering over it. You can step to the next instruction with `F10`, into a function with `F11` and so on. You can find the debugger control mapping here: https://code.visualstudio.com/Docs/editor/debugging#_debug-actions
 
+We can even introduce code to help us track down the point at which the failure occurs. If we add this condition just before calling `SmoothDampUnity`:
 
+```cs
+        if (velocity < 0f && input == 0f)
+        {
+            Debug.Log("Break");
+        }
+```
 
+And put a breakpoint on the break log message, the debugger will stop exactly on the frame where the error occurs. We can then step through line by line to see what is going on. Once we know what the problem is we can start to think of solutions.
