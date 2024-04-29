@@ -101,3 +101,6 @@ Although there are no errors in this script, if you press the run button, you'll
 
 This is one of the most common errors that you will see, and what it indicates is that a variable (in this case `target`) is supposed to be pointing to a component, but it hasn't been set to a component in the Unity editor.
 
+A single click on one of these error messages, highlights the object that caused the message (in this case, the `Sphere` object), and double clicking on the message, opens the editor at the line in the script where the error was detected.
+
+One thing to note about Runtime errors is that lines of code after the error do not get executed. You can test this by adding a line `Debug.Log("Update sphere");` at the end of the `Update` function. You'll notice that the message does not appear no matter how many times the function is called.
