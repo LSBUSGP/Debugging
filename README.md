@@ -104,3 +104,12 @@ This is one of the most common errors that you will see, and what it indicates i
 A single click on one of these error messages, highlights the object that caused the message (in this case, the `Sphere` object), and double clicking on the message, opens the editor at the line in the script where the error was detected.
 
 One thing to note about Runtime errors is that lines of code after the error do not get executed. You can test this by adding a line `Debug.Log("Update sphere");` at the end of the `Update` function. You'll notice that the message does not appear no matter how many times the function is called.
+
+Can you fix this error?
+
+### Warnings
+
+Open the scene `RuntimeWarning` in the folder `RuntimeErrorsAndWarnings`. This scene contains a single cube with a `BoxCollider`. If you run this scene, you will see a runtime warning in the `Console` window:
+
+![image](https://github.com/LSBUSGP/Debugging/assets/3679392/a6ed9ccd-c9b6-46dd-8747-6f049599d712)
+
