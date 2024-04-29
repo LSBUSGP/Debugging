@@ -76,3 +76,9 @@ This generates warning code CS0162:
 
 https://learn.microsoft.com/en-us/dotnet/csharp/misc/cs0162
 
+Unlike errors, you may still run your projects even with warnings in the scripts. However, it is good practice to investigate the warnings and what they mean as they usually mean you are trying to do something you shouldn't.
+
+## Runtime errors and warnings
+
+
+
