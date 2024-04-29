@@ -145,7 +145,30 @@ public class CustomWarning : MonoBehaviour
 
 As with other warning and error messages the object highlights in the editor when the message is clicked and the script opens when it is double clicked. Note that the `gameObject` passed as the second parameter to these messages is what indicates the object so you can (if you want to) have other objects highlight in response to the message. Note also that custom error messages do not stop execution like the built in errors.
 
-## Unity debug mode
+## Unity inspector debug mode
 
+Open the scene `InspectorDebug` in the folder `EditorDebugging`. This project has a single empty `GameObject` object with the `HiddenData.cs` script on it.
 
+```cs
+using UnityEngine;
 
+public class HiddenData : MonoBehaviour
+{
+    public int visibleValue = 1;
+    int hiddenValue = 0;
+
+    void Update()
+    {
+        hiddenValue++;
+        visibleValue = hiddenValue;
+    }
+}
+```
+
+Running this project, you will see that the `Visible Value` variable in the script is increasing in the `Inspector` window, but the `hiddenValue` is not shown. You can view this as well by switching the `Inspector` view into `Debug` mode. If you right click the `Inspector` tab, you can choose `Debug` mode from the context menu:
+
+![image](https://github.com/LSBUSGP/Debugging/assets/3679392/92c1c223-8f88-405b-93b6-f4b37b042fce)
+
+Now you will see normally hidden additional information about your script:
+
+![image](https://github.com/LSBUSGP/Debugging/assets/3679392/5308ae60-688f-4165-b480-cf909e26cb03)
