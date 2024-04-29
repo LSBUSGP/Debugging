@@ -246,5 +246,89 @@ Now we know exactly what the output looks like we can try digging into the cause
 
 ## Visual Studio debugger
 
+Open the scene `VisualStudioDebugging` in the folder `VisualStudioDebugging`. This scene contains the same object and script as before, but now I have found the source code to the `SmoothDamp` function and included it in the project. If you run the project you'll see that is exhibits the same sudden stop issue.
 
+```cs
+using UnityEngine;
 
+public class VisualStudioDebugCode : MonoBehaviour
+{
+    // from https://issuetracker.unity3d.com/issues/smoothdamp-behaves-differently-between-positive-and-negative-velocity
+    static float SmoothDampUnity(float current, float target, ref float currentVelocity, float smoothTime, float maxSpeed, float deltaTime)
+    {
+        // Based on Game Programming Gems 4 Chapter 1.10
+        smoothTime = Mathf.Max(0.0001F, smoothTime);
+        float omega = 2F / smoothTime;
+
+        float x = omega * deltaTime;
+        float exp = 1F / (1F + x + 0.48F * x * x + 0.235F * x * x * x);
+        float change = current - target;
+        float originalTo = target;
+
+        // Clamp maximum speed
+        float maxChange = maxSpeed * smoothTime;
+        change = Mathf.Clamp(change, -maxChange, maxChange);
+        target = current - change;
+
+        float temp = (currentVelocity + omega * change) * deltaTime;
+        currentVelocity = (currentVelocity - omega * temp) * exp;
+        float output = target + (change + temp) * exp;
+
+        // Prevent overshooting
+        if (originalTo - current > 0.0F == output > originalTo)
+        {
+            output = originalTo;
+            currentVelocity = (output - originalTo) / deltaTime;
+        }
+
+        return output;
+    }
+
+    public float speed = 5f;
+    public float smoothTime = 1f;
+    float velocity = 0f;
+
+    void Start()
+    {
+        Application.targetFrameRate = 30;
+    }
+
+    void Update()
+    {
+        Vector3 position = transform.position;
+        float input = Input.GetAxis("Horizontal");
+        float target = position.x + input * speed;
+        position.x = SmoothDampUnity(position.x, target, ref velocity, 1f, Mathf.Infinity, Time.deltaTime);
+        transform.position = position;
+    }
+}
+```
+
+We can debug into this using the Visual Studio debugger. In `Visual Studio Code` select the debug section and choose `Attach to Unity`:
+
+![image](https://github.com/LSBUSGP/Debugging/assets/3679392/18805a55-1f03-4bd5-aabb-f0334422cbc9)
+
+If you are using `Visual Studio` the options will be similar but under different menus. When you have successfully attached to Unity, it will open this box:
+
+![image](https://github.com/LSBUSGP/Debugging/assets/3679392/38dae78b-b1e3-4b2c-9829-36cbea38a524)
+
+Select the `Enable` button.
+
+Now you can stop the execution of your Unity project at any line of your program and examine what is going on. To do this you need to set a breakpoint. To set a breakpoint, select the line you want to examine and press `F9`. Then run your project in Unity and the execution should stop and the line you selected.
+
+At this point, Unity will stop responding and the current instruction should be highlighted in your program:
+
+![image](https://github.com/LSBUSGP/Debugging/assets/3679392/9ca2cef3-ff92-44e9-beab-27ec0c7c4c1d)
+
+You can view the contents of any variable at this point by hovering over it. You can step to the next instruction with `F10`, into a function with `F11` and so on. You can find the debugger control mapping here: https://code.visualstudio.com/Docs/editor/debugging#_debug-actions
+
+We can even introduce code to help us track down the point at which the failure occurs. If we add this condition just before calling `SmoothDampUnity`:
+
+```cs
+        if (velocity < 0f && input == 0f)
+        {
+            Debug.Log("Break");
+        }
+```
+
+And put a breakpoint on the break log message, the debugger will stop exactly on the frame where the error occurs. We can then step through line by line to see what is going on. Once we know what the problem is we can start to think of solutions.
