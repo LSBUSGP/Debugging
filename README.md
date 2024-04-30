@@ -190,6 +190,7 @@ Click on the `Packages` pull down box, and choose `Unity Registry`. Then find `U
 Now open the `CustomProfiler` scene from the `CustomProfiler` folder. This scene has one sphere object with the `ProfileMovement` script on it:
 
 ```cs
+using Unity.Profiling;
 using UnityEngine;
 
 public class ProfileMovement : MonoBehaviour
