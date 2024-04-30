@@ -244,6 +244,24 @@ Here the trace on the left is when I move from left to right and stop, then seco
 
 Now we know exactly what the output looks like we can try digging into the cause.
 
+Let's add another trace, this time for the input. Add another counter:
+
+```cs
+    public static readonly ProfilerCounter<float> InputCounter = new ProfilerCounter<float>(ProfilerCategory.Scripts, "Input", ProfilerMarkerDataUnit.Count);
+```
+
+And another sampple:
+
+```cs
+        InputCounter.Sample(Mathf.Abs(input));
+```
+
+And configure this in the `Profiler` window.
+
+![image](https://github.com/LSBUSGP/Debugging/assets/3679392/3949dc56-2337-4cca-959b-105f85dd5c93)
+
+Now we can see that the green speed line get clamped suddenly to zero when the blue input line hits zero. This seems to always happen when going from right left, but occassionally also happens when going from left to right.
+
 ## Visual Studio debugger
 
 Open the scene `VisualStudioDebugging` in the folder `VisualStudioDebugging`. This scene contains the same object and script as before, but now I have found the source code to the `SmoothDamp` function and included it in the project. If you run the project you'll see that is exhibits the same sudden stop issue.
